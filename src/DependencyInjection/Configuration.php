@@ -5,6 +5,7 @@
 
 namespace Fusonic\MessengerMailerBundle\DependencyInjection;
 
+use Fusonic\MessengerMailerBundle\EmailAttachmentHandler\FilesystemAttachmentHandler;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -16,7 +17,8 @@ class Configuration implements ConfigurationInterface
 
         $treeBuilder->getRootNode()
             ->children()
-                ->scalarNode('attachment_handler')->end()
+                ->scalarNode('attachment_handler')->defaultValue(FilesystemAttachmentHandler::class)
+                ->end()
             ->end()
         ;
 

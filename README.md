@@ -39,9 +39,20 @@ Requirements:
 - PHP 8.0+
 - Symfony 5.2+
 
-## Usage
+## Configuration
 
-Add the following to your Symfony configuration:
+Out of the box, no configuration is required at all. Just make sure that the bundle is added to your bundle configuration (`config/bundles.php`):
+
+```
+<?php
+
+return [
+    // ...
+    Fusonic\MessengerMailerBundle\MessengerMailerBundle::class => ['all' => true],
+];
+```
+
+The following configuration is the default. You can optionally use your own services for writing attachments:
 
 ```yaml
 # Bundle configuration
