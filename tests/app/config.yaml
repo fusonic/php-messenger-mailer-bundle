@@ -1,0 +1,29 @@
+messenger_mailer:
+    attachment_handler: Fusonic\MessengerMailerBundle\EmailAttachmentHandler\FilesystemAttachmentHandler
+
+framework:
+    mailer:
+        dsn: 'null://null'
+
+    messenger:
+        transports:
+            async: 'in-memory://'
+        routing:
+            'Symfony\Component\Mailer\Messenger\SendEmailMessage': async
+
+services:
+    test.async_transport:
+        alias: "messenger.transport.async"
+        public: true
+
+    test.mailer:
+        alias: "mailer"
+        public: true
+
+    Fusonic\MessengerMailerBundle\EmailAttachmentHandler\FilesystemAttachmentHandler:
+        arguments:
+            $attachmentsDirectory: "var/email-attachments"
+
+    test.event_subscriber_attachment_email_event_subscriber:
+        alias: Fusonic\MessengerMailerBundle\EventSubscriber\AttachmentEmailEventSubscriber
+        public: true
