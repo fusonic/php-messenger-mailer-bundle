@@ -5,3 +5,6 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
+    Fusonic\MessengerMailerBundle\EmailAttachmentHandler\FilesystemAttachmentHandler:
+        arguments:
+            $attachmentsDirectory: "%kernel.project_dir%/var/email-attachments"
