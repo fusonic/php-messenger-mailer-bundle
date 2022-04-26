@@ -1,7 +1,7 @@
 # messenger-mailer-bundle
 
-[![License](https://img.shields.io/packagist/l/fusonic/messenger-mailer-bundle?color=blue)](https://github.com/fusonic/messenger-mailer-bundle/blob/master/LICENSE)
-[![Latest Version](https://img.shields.io/github/tag/fusonic/messenger-mailer-bundle.svg?color=blue)](https://github.com/fusonic/messenger-mailer-bundle/releases)
+[![License](https://img.shields.io/packagist/l/fusonic/messenger-mailer-bundle?color=blue)](https://github.com/fusonic/php-messenger-mailer-bundle/blob/master/LICENSE)
+[![Latest Version](https://img.shields.io/github/tag/fusonic/php-messenger-mailer-bundle.svg?color=blue)](https://github.com/fusonic/php-messenger-mailer-bundle/releases)
 [![Total Downloads](https://img.shields.io/packagist/dt/fusonic/messenger-mailer-bundle.svg?color=blue)](https://packagist.org/packages/fusonic/messenger-mailer-bundle)
 ![php 8.0+](https://img.shields.io/badge/php-min%208.0-blue.svg)
 
