@@ -32,7 +32,7 @@ class AttachmentData
         $data = DataPart::fromPath($path);
         $body = $data->getBody();
 
-        if (!$name) {
+        if (null === $name) {
             $name = basename($path);
         }
 

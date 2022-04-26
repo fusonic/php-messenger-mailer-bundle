@@ -1,10 +1,14 @@
 <?php
 
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 class TestKernel extends Kernel
 {
+    /**
+     * @return BundleInterface[]
+     */
     public function registerBundles(): array
     {
         return [

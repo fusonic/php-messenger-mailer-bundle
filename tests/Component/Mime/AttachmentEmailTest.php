@@ -6,7 +6,7 @@
 namespace Fusonic\MessengerMailerBundle\Tests\Component\Mime;
 
 use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmail;
-use PHPStan\Testing\TestCase;
+use PHPUnit\Framework\TestCase;
 
 class AttachmentEmailTest extends TestCase
 {
@@ -15,13 +15,12 @@ class AttachmentEmailTest extends TestCase
         $email = new AttachmentEmail();
 
         $id = $email->getId();
-        $this->assertNotNull($id);
 
         $serialized = serialize($email);
         $unserialized = unserialize($serialized);
 
-        $this->assertInstanceOf(AttachmentEmail::class, $unserialized);
-        $this->assertSame($id, $unserialized->getId());
+        self::assertInstanceOf(AttachmentEmail::class, $unserialized);
+        self::assertSame($id, $unserialized->getId());
 
         $body1 = 'test content';
         $email->attachPersisted($body1, 'test.txt', 'plain/text');

@@ -2,6 +2,7 @@ messenger_mailer:
     attachment_handler: Fusonic\MessengerMailerBundle\EmailAttachmentHandler\FilesystemAttachmentHandler
 
 framework:
+    test: true
     mailer:
         dsn: 'null://null'
 

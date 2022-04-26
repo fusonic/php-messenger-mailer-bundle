@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mailer\Messenger\SendEmailMessage;
+use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Transport\InMemoryTransport;
 use TestKernel;
 
@@ -30,7 +31,7 @@ class FunctionalTest extends KernelTestCase
     {
         (new Filesystem())->remove('var/cache/test');
         self::bootKernel();
-        self::assertTrue(true);
+        self::assertTrue(static::$booted);
     }
 
     public function testServiceWiring(): void
@@ -38,7 +39,7 @@ class FunctionalTest extends KernelTestCase
         $container = self::$container;
 
         $eventSubscriber = $container->get('test.event_subscriber_attachment_email_event_subscriber');
-        $this->assertInstanceOf(AttachmentEmailEventSubscriber::class, $eventSubscriber);
+        self::assertInstanceOf(AttachmentEmailEventSubscriber::class, $eventSubscriber);
     }
 
     public function testEmail(): void
@@ -63,10 +64,12 @@ class FunctionalTest extends KernelTestCase
         /** @var InMemoryTransport $transport */
         /** @var InMemoryTransport $transport */
         $transport = self::$container->get('test.async_transport');
+        /** @var Envelope[] $messages */
         $messages = $transport->get();
 
-        $this->assertCount(1, $transport->getSent());
-        $this->assertInstanceOf(SendEmailMessage::class, $messages[0]->getMessage());
+        self::assertCount(1, $transport->getSent());
+        self::assertCount(1, $messages);
+        self::assertInstanceOf(SendEmailMessage::class, $messages[0]->getMessage());
 
         self::assertDirectoryExists($attachmentDirectory.'/'.$email->getId());
         self::assertFileExists($attachmentDirectory.'/'.$email->getId().'/path-file.txt');
