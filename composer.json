@@ -3,7 +3,7 @@
     "license": "MIT",
     "version": "1.0.7",
     "description": "Symfony bundle for asynchronous e-mails with attachments through Symfony Messenger.",
-    "type": "library",
+    "type": "symfony-bundle",
     "authors": [
         {
             "name": "Fusonic GmbH",

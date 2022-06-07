@@ -28,7 +28,7 @@ it might get deleted before the message is handled.
 
 ## Install
 
-Use composer to install the lib from packagist.
+Use composer to install the bundle from packagist.
 
 ```bash
 composer require fusonic/messenger-mailer-bundle

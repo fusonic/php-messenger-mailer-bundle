@@ -3,6 +3,7 @@ messenger_mailer:
 
 framework:
     test: true
+    http_method_override: false
     mailer:
         dsn: 'null://null'
 
