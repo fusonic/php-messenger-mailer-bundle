@@ -36,9 +36,7 @@ class FunctionalTest extends KernelTestCase
 
     public function testServiceWiring(): void
     {
-        $container = self::$container;
-
-        $eventSubscriber = $container->get('test.event_subscriber_attachment_email_event_subscriber');
+        $eventSubscriber = self::getContainer()->get('test.event_subscriber_attachment_email_event_subscriber');
         self::assertInstanceOf(AttachmentEmailEventSubscriber::class, $eventSubscriber);
     }
 
@@ -47,7 +45,7 @@ class FunctionalTest extends KernelTestCase
         $attachmentDirectory = $this->getAttachmentDirectory();
 
         /** @var MailerInterface $mailer */
-        $mailer = self::$container->get('test.mailer');
+        $mailer = self::getContainer()->get('test.mailer');
 
         $email = (new AttachmentEmail())
             ->subject('test')
@@ -62,8 +60,7 @@ class FunctionalTest extends KernelTestCase
         $mailer->send($email);
 
         /** @var InMemoryTransport $transport */
-        /** @var InMemoryTransport $transport */
-        $transport = self::$container->get('test.async_transport');
+        $transport = self::getContainer()->get('test.async_transport');
         /** @var Envelope[] $messages */
         $messages = $transport->get();
 
