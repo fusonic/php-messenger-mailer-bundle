@@ -1,7 +1,7 @@
 {
     "name": "fusonic/messenger-mailer-bundle",
     "license": "MIT",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Symfony bundle for asynchronous e-mails with attachments through Symfony Messenger.",
     "type": "symfony-bundle",
     "authors": [
@@ -33,7 +33,7 @@
         "phpstan/phpstan-symfony": "^1.1"
     },
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "symfony/mime": "^5.4|^6.0",
         "symfony/http-kernel": "^5.4|^6.0",
         "symfony/config": "^5.4|^6.0",
