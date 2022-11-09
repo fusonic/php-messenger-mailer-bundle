@@ -6,21 +6,20 @@
 namespace Fusonic\MessengerMailerBundle\Tests\Component\Mime;
 
 use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmail;
+use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmailInterface;
+use Fusonic\MessengerMailerBundle\Component\Mime\TemplatedAttachmentEmail;
 use PHPUnit\Framework\TestCase;
 
 class AttachmentEmailTest extends TestCase
 {
-    public function test(): void
+    /**
+     * @dataProvider getTestClasses
+     *
+     * @param class-string<AttachmentEmailInterface> $testClass
+     */
+    public function testWithAttachments(string $testClass): void
     {
-        $email = new AttachmentEmail();
-
-        $id = $email->getId();
-
-        $serialized = serialize($email);
-        $unserialized = unserialize($serialized);
-
-        self::assertInstanceOf(AttachmentEmail::class, $unserialized);
-        self::assertSame($id, $unserialized->getId());
+        $email = new $testClass();
 
         $body1 = 'test content';
         $email->attachPersisted($body1, 'test.txt', 'plain/text');
@@ -37,5 +36,33 @@ class AttachmentEmailTest extends TestCase
 
         self::assertSame($body1, $persistedAttachments[0]->getBody());
         self::assertSame($body2, $persistedAttachments[1]->getBody());
+    }
+
+    /**
+     * @dataProvider getTestClasses
+     *
+     * @param class-string<AttachmentEmailInterface> $testClass
+     */
+    public function testSerialization(string $testClass): void
+    {
+        $email = new $testClass();
+        $id = $email->getId();
+
+        $serialized = serialize($email);
+        $unserialized = unserialize($serialized);
+
+        self::assertInstanceOf($testClass, $unserialized);
+        self::assertSame($id, $unserialized->getId());
+    }
+
+    /**
+     * @return array<array<class-string<AttachmentEmailInterface>>>
+     */
+    public function getTestClasses(): array
+    {
+        return [
+            [AttachmentEmail::class],
+            [TemplatedAttachmentEmail::class],
+        ];
     }
 }

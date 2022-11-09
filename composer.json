@@ -1,7 +1,7 @@
 {
     "name": "fusonic/messenger-mailer-bundle",
     "license": "MIT",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "description": "Symfony bundle for asynchronous e-mails with attachments through Symfony Messenger.",
     "type": "symfony-bundle",
     "authors": [
@@ -41,7 +41,8 @@
         "symfony/messenger": "^5.4|^6.0",
         "symfony/filesystem": "^5.4|^6.0",
         "symfony/yaml": "^5.4|^6.0",
-        "symfony/mailer": "^5.4|^6.0"
+        "symfony/mailer": "^5.4|^6.0",
+        "symfony/twig-bridge": "^5.4|^6.0"
     },
     "scripts": {
         "phpstan": "php -d memory_limit=2048M vendor/bin/phpstan analyse",

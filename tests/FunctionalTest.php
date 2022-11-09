@@ -10,7 +10,6 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mailer\Messenger\SendEmailMessage;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Transport\InMemoryTransport;
-use TestKernel;
 
 class FunctionalTest extends KernelTestCase
 {
@@ -24,7 +23,7 @@ class FunctionalTest extends KernelTestCase
 
     protected static function getKernelClass(): string
     {
-        return TestKernel::class;
+        return \TestKernel::class;
     }
 
     public function testBootKernel(): void

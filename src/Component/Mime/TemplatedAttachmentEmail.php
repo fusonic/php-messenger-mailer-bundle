@@ -7,11 +7,11 @@ declare(strict_types=1);
 
 namespace Fusonic\MessengerMailerBundle\Component\Mime;
 
-use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mime\Header\Headers;
 use Symfony\Component\Mime\Part\AbstractPart;
 
-class AttachmentEmail extends Email implements AttachmentEmailInterface
+class TemplatedAttachmentEmail extends TemplatedEmail implements AttachmentEmailInterface
 {
     use AttachmentEmailTrait;
 

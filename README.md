@@ -69,6 +69,23 @@ services:
 
 If you want to use a different service for attachment handling, you can create your own and overwrite the default in your service configuration.
 
+## Usage
+
+This bundle provides two classes for creating e-mails [AttachmentEmail](src/Component/Mime/AttachmentEmail.php) (extension of the Symfony `Email` class)
+and [TemplatedAttachmentEmail](src/Component/Mime/TemplatedAttachmentEmail.php) (extension of the Symfony `TemplatedEmail` class).
+
+Instead of using `attach` and `attachFromPath` you should use `attachPersistedFromPath` and `attachPersisted`. Both of these methods
+will persist the content depending on the `FilesystemAttachmentHandler`.
+
+```php
+
+$email = (new TemplatedAttachmentEmail())
+    ->from('hello@example.com')
+    ->attachPersisted('Email text', 'filename.txt', 'plain/text')
+    // ...
+    ->html('...');
+```
+
 ## Contributing
 
 This is a subtree split of [fusonic/php-extensions](https://github.com/fusonic/php-extensions) repository. Please create your pull requests there.
