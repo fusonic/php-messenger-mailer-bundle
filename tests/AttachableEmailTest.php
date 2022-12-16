@@ -10,6 +10,7 @@ use Fusonic\MessengerMailerBundle\EmailAttachmentHandler\FilesystemAttachmentHan
 use Fusonic\MessengerMailerBundle\EventSubscriber\AttachmentEmailEventSubscriber;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mailer\Messenger\SendEmailMessage;
+use Symfony\Component\Mailer\Transport\NullTransport;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Event\SendMessageToTransportsEvent;
 use Symfony\Component\Messenger\Event\WorkerMessageHandledEvent;
@@ -31,7 +32,7 @@ class AttachableEmailTest extends TestCase
         $attachmentHandler = new FilesystemAttachmentHandler($attachmentDirectory);
         $eventSubscriber = new AttachmentEmailEventSubscriber($attachmentHandler);
 
-        $event = new SendMessageToTransportsEvent(new Envelope(new SendEmailMessage($email)));
+        $event = new SendMessageToTransportsEvent(new Envelope(new SendEmailMessage($email)), [new NullTransport()]);
         $eventSubscriber->onSendMessageToTransportsEvent($event);
 
         $attachments = $email->getAttachments();

@@ -7,6 +7,7 @@ use Fusonic\MessengerMailerBundle\EmailAttachmentHandler\FilesystemAttachmentHan
 use Fusonic\MessengerMailerBundle\EventSubscriber\AttachmentEmailEventSubscriber;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mailer\Messenger\SendEmailMessage;
+use Symfony\Component\Mailer\Transport\NullTransport;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Event\SendMessageToTransportsEvent;
 use Symfony\Component\Mime\Email;
@@ -22,7 +23,7 @@ class SendMessageToTransportTest extends TestCase
 
         $dummyClass = new class() {
         };
-        $event = new SendMessageToTransportsEvent(new Envelope($dummyClass));
+        $event = new SendMessageToTransportsEvent(new Envelope($dummyClass), [new NullTransport()]);
         $eventSubscriber->onSendMessageToTransportsEvent($event);
 
         self::assertNotInstanceOf(SendEmailMessage::class, $event->getEnvelope()->getMessage());
@@ -35,7 +36,7 @@ class SendMessageToTransportTest extends TestCase
 
         $email = new Email();
 
-        $event = new SendMessageToTransportsEvent(new Envelope(new SendEmailMessage($email)));
+        $event = new SendMessageToTransportsEvent(new Envelope(new SendEmailMessage($email)), [new NullTransport()]);
         $eventSubscriber->onSendMessageToTransportsEvent($event);
 
         self::assertInstanceOf(SendEmailMessage::class, $event->getEnvelope()->getMessage());
