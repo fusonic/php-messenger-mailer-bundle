@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Fusonic\MessengerMailerBundle\Component\Mime;
 
 interface AttachmentEmailInterface
