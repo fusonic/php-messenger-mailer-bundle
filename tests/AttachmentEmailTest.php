@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Fusonic\MessengerMailerBundle\Tests;
 
 use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmail;
+use Fusonic\MessengerMailerBundle\Component\Mime\TemplatedAttachmentEmail;
 use Fusonic\MessengerMailerBundle\EmailAttachmentHandler\FilesystemAttachmentHandler;
 use Fusonic\MessengerMailerBundle\EventSubscriber\AttachmentEmailEventSubscriber;
 use PHPUnit\Framework\TestCase;
@@ -17,14 +18,16 @@ use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Event\SendMessageToTransportsEvent;
 use Symfony\Component\Messenger\Event\WorkerMessageHandledEvent;
 
-class AttachableEmailTest extends TestCase
+final class AttachmentEmailTest extends TestCase
 {
     use TestSetupTrait;
 
-    public function testSendAndHandleMessage(): void
+    /**
+     * @dataProvider provideEmailInstances
+     */
+    public function testSendAndHandleMessage(TemplatedAttachmentEmail|AttachmentEmail $email): void
     {
         $attachmentDirectory = $this->getAttachmentDirectory();
-        $email = new AttachmentEmail();
 
         $email->attachPersisted('inline file content', 'inline-file.txt');
         file_put_contents('/tmp/path-file.txt', 'file from path content');
@@ -47,5 +50,16 @@ class AttachableEmailTest extends TestCase
 
         self::assertFileDoesNotExist($attachmentDirectory.'/'.$email->getId().'/path-file.txt');
         self::assertFileDoesNotExist($attachmentDirectory.'/'.$email->getId().'/inline-file.txt');
+    }
+
+    /**
+     * @return array<array<TemplatedAttachmentEmail|AttachmentEmail>>
+     */
+    public function provideEmailInstances(): array
+    {
+        return [
+            [new AttachmentEmail()],
+            [new TemplatedAttachmentEmail()],
+        ];
     }
 }

@@ -7,19 +7,19 @@ declare(strict_types=1);
 
 namespace Fusonic\MessengerMailerBundle\Contracts;
 
-use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmail;
+use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmailInterface;
 
 interface EmailAttachmentHandlerInterface
 {
     /**
-     * Handle the writing of AttachmentEmail attachments. For example; creating a directory for the email and
+     * Handle the writing of AttachmentEmailInterface attachments. For example; creating a directory for the email and
      * writing the attachments in that directory.
      */
-    public function writeAttachment(AttachmentEmail $email, string $filename, string $body): string;
+    public function writeAttachment(AttachmentEmailInterface $email, string $filename, string $body): string;
 
     /**
-     * Handle the removing of AttachmentEmail attachments. For example; deleting the directory containing the
+     * Handle the removing of AttachmentEmailInterface attachments. For example; deleting the directory containing the
      * attachments.
      */
-    public function removeAttachments(AttachmentEmail $email): void;
+    public function removeAttachments(AttachmentEmailInterface $email): void;
 }

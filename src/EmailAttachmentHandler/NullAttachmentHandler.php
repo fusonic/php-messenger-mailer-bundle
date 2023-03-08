@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fusonic\MessengerMailerBundle\EmailAttachmentHandler;
 
-use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmail;
+use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmailInterface;
 use Fusonic\MessengerMailerBundle\Contracts\EmailAttachmentHandlerInterface;
 
 /**
@@ -12,12 +12,12 @@ use Fusonic\MessengerMailerBundle\Contracts\EmailAttachmentHandlerInterface;
  */
 class NullAttachmentHandler implements EmailAttachmentHandlerInterface
 {
-    public function writeAttachment(AttachmentEmail $email, string $filename, string $body): string
+    public function writeAttachment(AttachmentEmailInterface $email, string $filename, string $body): string
     {
         return $filename;
     }
 
-    public function removeAttachments(AttachmentEmail $email): void
+    public function removeAttachments(AttachmentEmailInterface $email): void
     {
     }
 }

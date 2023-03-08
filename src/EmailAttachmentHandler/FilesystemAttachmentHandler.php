@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Fusonic\MessengerMailerBundle\EmailAttachmentHandler;
 
-use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmail;
+use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmailInterface;
 use Fusonic\MessengerMailerBundle\Contracts\EmailAttachmentHandlerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -22,7 +22,7 @@ class FilesystemAttachmentHandler implements EmailAttachmentHandlerInterface
         $this->attachmentsDirectory = $attachmentsDirectory;
     }
 
-    public function writeAttachment(AttachmentEmail $email, string $filename, string $body): string
+    public function writeAttachment(AttachmentEmailInterface $email, string $filename, string $body): string
     {
         $path = sprintf(
             '%s/%s/%s',
@@ -36,7 +36,7 @@ class FilesystemAttachmentHandler implements EmailAttachmentHandlerInterface
         return $path;
     }
 
-    public function removeAttachments(AttachmentEmail $email): void
+    public function removeAttachments(AttachmentEmailInterface $email): void
     {
         $this->fs->remove(
             sprintf('%s/%s', $this->attachmentsDirectory, $email->getId())

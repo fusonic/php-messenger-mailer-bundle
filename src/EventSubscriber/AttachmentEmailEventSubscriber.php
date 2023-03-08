@@ -8,6 +8,7 @@ declare(strict_types=1);
 namespace Fusonic\MessengerMailerBundle\EventSubscriber;
 
 use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmail;
+use Fusonic\MessengerMailerBundle\Component\Mime\TemplatedAttachmentEmail;
 use Fusonic\MessengerMailerBundle\Contracts\EmailAttachmentHandlerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\Messenger\SendEmailMessage;
@@ -45,7 +46,7 @@ class AttachmentEmailEventSubscriber implements EventSubscriberInterface
 
         $email = $message->getMessage();
 
-        if (!$email instanceof AttachmentEmail) {
+        if (!$email instanceof AttachmentEmail && !$email instanceof TemplatedAttachmentEmail) {
             return;
         }
 
@@ -71,7 +72,7 @@ class AttachmentEmailEventSubscriber implements EventSubscriberInterface
 
         $email = $message->getMessage();
 
-        if (!$email instanceof AttachmentEmail) {
+        if (!$email instanceof AttachmentEmail && !$email instanceof TemplatedAttachmentEmail) {
             return;
         }
 
