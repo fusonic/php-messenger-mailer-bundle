@@ -7,6 +7,7 @@ namespace Fusonic\MessengerMailerBundle\Tests\EmailAttachmentHandler;
 use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmail;
 use Fusonic\MessengerMailerBundle\EmailAttachmentHandler\NullAttachmentHandler;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Mime\Part\DataPart;
 
 class NullAttachmentHandlerTest extends TestCase
 {
@@ -17,7 +18,7 @@ class NullAttachmentHandlerTest extends TestCase
 
         $content = 'inline file content';
         $name = 'inline-file.txt';
-        $email->attachPersisted($content, $name);
+        $email->addPersistedPart(new DataPart($content, $name));
 
         $filename = $handler->writeAttachment($email, $name, $content);
 

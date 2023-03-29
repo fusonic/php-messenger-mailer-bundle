@@ -12,9 +12,14 @@ use Fusonic\MessengerMailerBundle\Contracts\EmailAttachmentHandlerInterface;
  */
 class NullAttachmentHandler implements EmailAttachmentHandlerInterface
 {
-    public function writeAttachment(AttachmentEmailInterface $email, string $filename, string $body): string
+    public function writeAttachment(AttachmentEmailInterface $email, string $path, string $body): string
     {
-        return $filename;
+        return $path;
+    }
+
+    public function readAttachment(string $path): string
+    {
+        return '';
     }
 
     public function removeAttachments(AttachmentEmailInterface $email): void

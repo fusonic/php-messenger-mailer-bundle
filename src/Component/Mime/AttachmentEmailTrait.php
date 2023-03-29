@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Fusonic\MessengerMailerBundle\Component\Mime;
 
+use Symfony\Component\Mime\Part\DataPart;
+
 /**
  * Trait with methods for the extends the Symfony Email/TemplatedEmail objects.
  *
  *   - It adds an auto generated `id` property for adding the possibility to 'trace'
- *   - The `Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmail::attachPersisted`
- *     and `Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmail::attachPersistedFromPath` methods can be used
+ *   - The `Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmail::addPersistedPart` method can be used
  *     to add email attachment that will be persisted when handled on an async messenger transport.
  */
 trait AttachmentEmailTrait
@@ -17,39 +18,58 @@ trait AttachmentEmailTrait
     private string $id;
 
     /**
-     * @var AttachmentData[]
+     * @var PersistedAttachment[]
      */
     private array $persistedAttachments = [];
+
+    /**
+     * @internal this array is only used to 'collect' the data parts so that they can be
+     *   converted into real attachment when the message gets handled
+     *
+     * @var DataPart[]
+     */
+    private array $collectedDataParts = [];
 
     public function getId(): string
     {
         return $this->id;
     }
 
-    public function attachPersistedFromPath(string $path, string $name = null, string $contentType = null): self
+    public function addPersistedPart(DataPart $part): self
     {
-        $this->persistedAttachments[] = AttachmentData::fromPath($path, $name, $contentType);
-
-        return $this;
-    }
-
-    public function attachPersisted(string $body, string $name, string $contentType = null): self
-    {
-        $this->persistedAttachments[] = AttachmentData::fromBody($name, $body, $contentType);
+        $this->collectedDataParts[] = $part;
 
         return $this;
     }
 
     /**
-     * @return AttachmentData[]
+     * @internal
+     *
+     * @return DataPart[]
+     */
+    public function getCollectedDataParts(): array
+    {
+        return $this->collectedDataParts;
+    }
+
+    /**
+     * @internal
+     *
+     * @return PersistedAttachment[]
      */
     public function getPersistedAttachments(): array
     {
         return $this->persistedAttachments;
     }
 
-    private function generateRandomId(): string
+    /**
+     * @internal
+     *
+     * @param PersistedAttachment[] $persistedAttachments
+     */
+    public function setPersistedAttachments(array $persistedAttachments): void
     {
-        return bin2hex(random_bytes(16));
+        $this->persistedAttachments = $persistedAttachments;
+        $this->collectedDataParts = [];
     }
 }

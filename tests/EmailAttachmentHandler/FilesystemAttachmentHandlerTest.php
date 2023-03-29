@@ -7,6 +7,7 @@ namespace Fusonic\MessengerMailerBundle\Tests\EmailAttachmentHandler;
 use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmail;
 use Fusonic\MessengerMailerBundle\EmailAttachmentHandler\FilesystemAttachmentHandler;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Mime\Part\DataPart;
 
 class FilesystemAttachmentHandlerTest extends TestCase
 {
@@ -21,7 +22,7 @@ class FilesystemAttachmentHandlerTest extends TestCase
 
         $content = 'inline file content';
         $name = 'inline-file.txt';
-        $email->attachPersisted($content, $name);
+        $email->addPersistedPart(new DataPart($content, $name));
 
         $handler->writeAttachment($email, $name, $content);
         $path = $directory.'/'.$email->getId().'/'.$name;

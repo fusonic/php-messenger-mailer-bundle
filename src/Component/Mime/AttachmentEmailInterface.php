@@ -4,16 +4,26 @@ declare(strict_types=1);
 
 namespace Fusonic\MessengerMailerBundle\Component\Mime;
 
+use Symfony\Component\Mime\Part\DataPart;
+
 interface AttachmentEmailInterface
 {
     public function getId(): string;
 
-    public function attachPersistedFromPath(string $path, string $name = null, string $contentType = null): self;
-
-    public function attachPersisted(string $body, string $name, string $contentType = null): self;
+    public function addPersistedPart(DataPart $part): self;
 
     /**
-     * @return AttachmentData[]
+     * @return DataPart[]
+     */
+    public function getCollectedDataParts(): array;
+
+    /**
+     * @return PersistedAttachment[]
      */
     public function getPersistedAttachments(): array;
+
+    /**
+     * @param PersistedAttachment[] $persistedAttachments
+     */
+    public function setPersistedAttachments(array $persistedAttachments): void;
 }

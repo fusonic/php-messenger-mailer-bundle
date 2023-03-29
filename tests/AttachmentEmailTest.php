@@ -10,15 +10,16 @@ namespace Fusonic\MessengerMailerBundle\Tests;
 use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmail;
 use Fusonic\MessengerMailerBundle\Component\Mime\TemplatedAttachmentEmail;
 use Fusonic\MessengerMailerBundle\EmailAttachmentHandler\FilesystemAttachmentHandler;
-use Fusonic\MessengerMailerBundle\EventSubscriber\AttachmentEmailEventSubscriber;
-use PHPUnit\Framework\TestCase;
+use Fusonic\MessengerMailerBundle\Middleware\AttachmentEmailMiddleware;
 use Symfony\Component\Mailer\Messenger\SendEmailMessage;
-use Symfony\Component\Mailer\Transport\NullTransport;
 use Symfony\Component\Messenger\Envelope;
-use Symfony\Component\Messenger\Event\SendMessageToTransportsEvent;
-use Symfony\Component\Messenger\Event\WorkerMessageHandledEvent;
+use Symfony\Component\Messenger\Stamp\ReceivedStamp;
+use Symfony\Component\Messenger\Stamp\SentStamp;
+use Symfony\Component\Messenger\Test\Middleware\MiddlewareTestCase;
+use Symfony\Component\Messenger\Transport\Sender\SenderInterface;
+use Symfony\Component\Mime\Part\DataPart;
 
-final class AttachmentEmailTest extends TestCase
+final class AttachmentEmailTest extends MiddlewareTestCase
 {
     use TestSetupTrait;
 
@@ -27,26 +28,35 @@ final class AttachmentEmailTest extends TestCase
      */
     public function testSendAndHandleMessage(TemplatedAttachmentEmail|AttachmentEmail $email): void
     {
+        $sender = $this->createMock(SenderInterface::class);
         $attachmentDirectory = $this->getAttachmentDirectory();
 
-        $email->attachPersisted('inline file content', 'inline-file.txt');
+        $email->addPersistedPart(new DataPart('inline file content', 'inline-file.txt'));
         file_put_contents('/tmp/path-file.txt', 'file from path content');
-        $email->attachPersistedFromPath('/tmp/path-file.txt');
+        $email->addPersistedPart(DataPart::fromPath('/tmp/path-file.txt', 'path-file.txt', 'text/plain'));
 
+        $stack = $this->getStackMock();
         // Test sending
         $attachmentHandler = new FilesystemAttachmentHandler($attachmentDirectory);
-        $eventSubscriber = new AttachmentEmailEventSubscriber($attachmentHandler);
 
-        $event = new SendMessageToTransportsEvent(new Envelope(new SendEmailMessage($email)), [new NullTransport()]);
-        $eventSubscriber->onSendMessageToTransportsEvent($event);
+        $middleware = new AttachmentEmailMiddleware($attachmentHandler);
 
-        $attachments = $email->getAttachments();
-        self::assertCount(2, $attachments);
+        $envelope = (new Envelope(new SendEmailMessage($email)));
+
+        self::assertCount(2, $email->getCollectedDataParts());
+
+        $middleware->handle($envelope, $stack);
+        $envelope = $envelope->with(new SentStamp($sender::class, 'test_sender'));
+
+        self::assertCount(0, $email->getAttachments());
+        // The collectedDataParts have been reset
+        self::assertCount(0, $email->getCollectedDataParts());
+
         self::assertFileExists($attachmentDirectory.'/'.$email->getId().'/path-file.txt');
         self::assertFileExists($attachmentDirectory.'/'.$email->getId().'/inline-file.txt');
 
-        $event = new WorkerMessageHandledEvent(new Envelope(new SendEmailMessage($email)), 'bus');
-        $eventSubscriber->onWorkerMessageHandledEvent($event);
+        $envelope = $envelope->with(new ReceivedStamp('test_transport'));
+        $middleware->handle($envelope, $stack);
 
         self::assertFileDoesNotExist($attachmentDirectory.'/'.$email->getId().'/path-file.txt');
         self::assertFileDoesNotExist($attachmentDirectory.'/'.$email->getId().'/inline-file.txt');

@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Fusonic\MessengerMailerBundle\Tests;
 
 use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmail;
-use Fusonic\MessengerMailerBundle\EventSubscriber\AttachmentEmailEventSubscriber;
+use Fusonic\MessengerMailerBundle\Middleware\AttachmentEmailMiddleware;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mailer\Messenger\SendEmailMessage;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Transport\InMemoryTransport;
+use Symfony\Component\Mime\Part\DataPart;
 
 class FunctionalTest extends KernelTestCase
 {
@@ -37,8 +38,8 @@ class FunctionalTest extends KernelTestCase
 
     public function testServiceWiring(): void
     {
-        $eventSubscriber = self::getContainer()->get('test.event_subscriber_attachment_email_event_subscriber');
-        self::assertInstanceOf(AttachmentEmailEventSubscriber::class, $eventSubscriber);
+        $middleware = self::getContainer()->get(AttachmentEmailMiddleware::class);
+        self::assertInstanceOf(AttachmentEmailMiddleware::class, $middleware);
     }
 
     public function testEmail(): void
@@ -54,9 +55,9 @@ class FunctionalTest extends KernelTestCase
             ->to('test@example.com')
             ->text('test');
 
-        $email->attachPersisted('inline file content', 'inline-file.txt');
+        $email->addPersistedPart(new DataPart('inline file content', 'inline-file.txt'));
         file_put_contents('/tmp/path-file.txt', 'file from path content');
-        $email->attachPersistedFromPath('/tmp/path-file.txt');
+        $email->addPersistedPart(DataPart::fromPath('/tmp/path-file.txt'));
 
         $mailer->send($email);
 

@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Fusonic\MessengerMailerBundle\Component\Mime;
 
+use Fusonic\MessengerMailerBundle\Helper\RandomHelper;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\Header\Headers;
 use Symfony\Component\Mime\Part\AbstractPart;
@@ -17,19 +18,19 @@ class AttachmentEmail extends Email implements AttachmentEmailInterface
 
     public function __construct(Headers $headers = null, AbstractPart $body = null)
     {
-        $this->id = $this->generateRandomId();
+        $this->id = RandomHelper::randomHex();
 
         parent::__construct($headers, $body);
     }
 
     public function __serialize(): array
     {
-        return [$this->id, parent::__serialize()];
+        return [$this->id, $this->persistedAttachments, parent::__serialize()];
     }
 
     public function __unserialize(array $data): void
     {
-        [$this->id, $parentData] = $data;
+        [$this->id, $this->persistedAttachments, $parentData] = $data;
 
         parent::__unserialize($parentData);
     }

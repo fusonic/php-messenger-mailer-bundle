@@ -12,6 +12,10 @@ framework:
             async: 'in-memory://'
         routing:
             'Symfony\Component\Mailer\Messenger\SendEmailMessage': async
+        buses:
+            default:
+                middleware:
+                    - Fusonic\MessengerMailerBundle\Middleware\AttachmentEmailMiddleware
 
 services:
     test.async_transport:
@@ -25,7 +29,3 @@ services:
     Fusonic\MessengerMailerBundle\EmailAttachmentHandler\FilesystemAttachmentHandler:
         arguments:
             $attachmentsDirectory: "var/email-attachments"
-
-    test.event_subscriber_attachment_email_event_subscriber:
-        alias: Fusonic\MessengerMailerBundle\EventSubscriber\AttachmentEmailEventSubscriber
-        public: true

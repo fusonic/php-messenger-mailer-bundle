@@ -6,6 +6,7 @@ namespace Fusonic\MessengerMailerBundle\EmailAttachmentHandler;
 
 use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmailInterface;
 use Fusonic\MessengerMailerBundle\Contracts\EmailAttachmentHandlerInterface;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -22,18 +23,29 @@ class FilesystemAttachmentHandler implements EmailAttachmentHandlerInterface
         $this->attachmentsDirectory = $attachmentsDirectory;
     }
 
-    public function writeAttachment(AttachmentEmailInterface $email, string $filename, string $body): string
+    public function writeAttachment(AttachmentEmailInterface $email, string $path, string $body): string
     {
         $path = sprintf(
             '%s/%s/%s',
             $this->attachmentsDirectory,
             $email->getId(),
-            $filename
+            $path
         );
 
         $this->fs->dumpFile($path, $body);
 
         return $path;
+    }
+
+    public function readAttachment(string $path): string
+    {
+        if (!file_exists($path)) {
+            throw new FileNotFoundException(null, 0, null, $path);
+        }
+
+        $content = file_get_contents($path);
+
+        return false !== $content ? $content : '';
     }
 
     public function removeAttachments(AttachmentEmailInterface $email): void

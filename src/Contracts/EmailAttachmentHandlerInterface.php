@@ -15,7 +15,9 @@ interface EmailAttachmentHandlerInterface
      * Handle the writing of AttachmentEmailInterface attachments. For example; creating a directory for the email and
      * writing the attachments in that directory.
      */
-    public function writeAttachment(AttachmentEmailInterface $email, string $filename, string $body): string;
+    public function writeAttachment(AttachmentEmailInterface $email, string $path, string $body): string;
+
+    public function readAttachment(string $path): string;
 
     /**
      * Handle the removing of AttachmentEmailInterface attachments. For example; deleting the directory containing the

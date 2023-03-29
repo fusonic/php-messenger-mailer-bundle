@@ -1,9 +1,7 @@
 services:
-    Fusonic\MessengerMailerBundle\EventSubscriber\AttachmentEmailEventSubscriber:
+    Fusonic\MessengerMailerBundle\Middleware\AttachmentEmailMiddleware:
         arguments:
             $handler: '@messenger_mailer.attachment_handler'
-        tags:
-            - { name: kernel.event_subscriber }
 
     Fusonic\MessengerMailerBundle\EmailAttachmentHandler\FilesystemAttachmentHandler:
         arguments:
