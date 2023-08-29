@@ -1,7 +1,14 @@
 <?php
 
+// Copyright (c) Fusonic GmbH. All rights reserved.
+// Licensed under the MIT License. See LICENSE file in the project root for license information.
+
 declare(strict_types=1);
 
+namespace Fusonic\MessengerMailerBundle\Tests\app;
+
+use Fusonic\MessengerMailerBundle\MessengerMailerBundle;
+use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
@@ -14,8 +21,8 @@ class TestKernel extends Kernel
     public function registerBundles(): array
     {
         return [
-            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new Fusonic\MessengerMailerBundle\MessengerMailerBundle(),
+            new FrameworkBundle(),
+            new MessengerMailerBundle(),
         ];
     }
 

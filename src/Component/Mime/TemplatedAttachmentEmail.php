@@ -16,7 +16,7 @@ class TemplatedAttachmentEmail extends TemplatedEmail implements AttachmentEmail
 {
     use AttachmentEmailTrait;
 
-    public function __construct(Headers $headers = null, AbstractPart $body = null)
+    public function __construct(?Headers $headers = null, ?AbstractPart $body = null)
     {
         $this->id = RandomHelper::randomHex();
 

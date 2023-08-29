@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" backupGlobals="false" colors="true"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.6/phpunit.xsd" backupGlobals="false" colors="true"
          bootstrap="vendor/autoload.php" failOnRisky="true" failOnWarning="true">
 
     <coverage processUncoveredFiles="true">
@@ -12,6 +12,7 @@
     <php>
         <ini name="error_reporting" value="-1"/>
         <server name="KERNEL_CLASS" value="TestKernel"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
     </php>
 
     <testsuites>
@@ -19,4 +20,8 @@
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener"/>
+    </listeners>
 </phpunit>

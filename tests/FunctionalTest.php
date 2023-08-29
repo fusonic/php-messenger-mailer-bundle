@@ -1,11 +1,15 @@
 <?php
 
+// Copyright (c) Fusonic GmbH. All rights reserved.
+// Licensed under the MIT License. See LICENSE file in the project root for license information.
+
 declare(strict_types=1);
 
 namespace Fusonic\MessengerMailerBundle\Tests;
 
 use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmail;
 use Fusonic\MessengerMailerBundle\Middleware\AttachmentEmailMiddleware;
+use Fusonic\MessengerMailerBundle\Tests\app\TestKernel;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Mailer\MailerInterface;
@@ -26,7 +30,7 @@ class FunctionalTest extends KernelTestCase
 
     protected static function getKernelClass(): string
     {
-        return \TestKernel::class;
+        return TestKernel::class;
     }
 
     public function testBootKernel(): void

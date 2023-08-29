@@ -16,7 +16,7 @@ class AttachmentEmail extends Email implements AttachmentEmailInterface
 {
     use AttachmentEmailTrait;
 
-    public function __construct(Headers $headers = null, AbstractPart $body = null)
+    public function __construct(?Headers $headers = null, ?AbstractPart $body = null)
     {
         $this->id = RandomHelper::randomHex();
 
