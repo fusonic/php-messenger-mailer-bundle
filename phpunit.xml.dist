@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         colors="true"
+         bootstrap="vendor/autoload.php"
+         beStrictAboutCoverageMetadata="true"
+         beStrictAboutOutputDuringTests="true"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+         displayDetailsOnTestsThatTriggerErrors="true"
+         failOnRisky="true"
+         failOnWarning="true">
+
+    <source ignoreSuppressionOfDeprecations="true"
+            ignoreSuppressionOfPhpDeprecations="true"
+            ignoreSuppressionOfErrors="true"
+            ignoreSuppressionOfNotices="true"
+            ignoreSuppressionOfPhpNotices="true"
+            ignoreSuppressionOfWarnings="true"
+            ignoreSuppressionOfPhpWarnings="true">
+        <include>
+            <directory>./src/</directory>
+        </include>
+    </source>
+
+    <php>
+        <ini name="error_reporting" value="-1"/>
+        <ini name="display_errors" value="1"/>
+        <server name="KERNEL_CLASS" value="TestKernel"/>
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
+        <env name="APP_DEBUG" value="false" />
+    </php>
+
+    <testsuites>
+        <testsuite name="Fusonic MessnegerMailerBundle Test Suite">
+            <directory>./tests/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
