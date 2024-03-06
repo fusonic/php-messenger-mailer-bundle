@@ -32,7 +32,7 @@
     </php>
 
     <testsuites>
-        <testsuite name="Fusonic MessnegerMailerBundle Test Suite">
+        <testsuite name="Fusonic MessengerMailerBundle Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
