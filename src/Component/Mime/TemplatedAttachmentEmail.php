@@ -30,6 +30,9 @@ class TemplatedAttachmentEmail extends TemplatedEmail implements AttachmentEmail
         return [$this->id, $this->persistedAttachments, parent::__serialize()];
     }
 
+    /**
+     * @param array<mixed> $data
+     */
     public function __unserialize(array $data): void
     {
         [$this->id, $this->persistedAttachments, $parentData] = $data;

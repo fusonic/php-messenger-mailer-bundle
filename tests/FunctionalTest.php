@@ -27,6 +27,12 @@ class FunctionalTest extends KernelTestCase
         self::bootKernel();
     }
 
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        (new Filesystem())->remove($this->getAttachmentDirectory());
+    }
+
     protected static function getKernelClass(): string
     {
         return TestKernel::class;

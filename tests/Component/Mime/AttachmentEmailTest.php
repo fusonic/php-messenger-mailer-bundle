@@ -12,16 +12,16 @@ namespace Fusonic\MessengerMailerBundle\Tests\Component\Mime;
 use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmail;
 use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmailInterface;
 use Fusonic\MessengerMailerBundle\Component\Mime\TemplatedAttachmentEmail;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mime\Part\DataPart;
 
 class AttachmentEmailTest extends TestCase
 {
     /**
-     * @dataProvider getTestClasses
-     *
      * @param class-string<AttachmentEmailInterface> $testClass
      */
+    #[DataProvider('getTestClasses')]
     public function testWithAttachments(string $testClass): void
     {
         $email = new $testClass();
@@ -44,10 +44,9 @@ class AttachmentEmailTest extends TestCase
     }
 
     /**
-     * @dataProvider getTestClasses
-     *
      * @param class-string<AttachmentEmailInterface> $testClass
      */
+    #[DataProvider('getTestClasses')]
     public function testSerialization(string $testClass): void
     {
         $email = new $testClass();

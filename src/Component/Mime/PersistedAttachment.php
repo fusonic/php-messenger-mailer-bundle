@@ -20,6 +20,9 @@ class PersistedAttachment
         return [$this->name, $this->path, $this->contentType];
     }
 
+    /**
+     * @param array<mixed> $data
+     */
     public function __unserialize(array $data): void
     {
         [$this->name, $this->path, $this->contentType] = $data;

@@ -13,6 +13,7 @@ use Fusonic\MessengerMailerBundle\Component\Mime\AttachmentEmail;
 use Fusonic\MessengerMailerBundle\Component\Mime\TemplatedAttachmentEmail;
 use Fusonic\MessengerMailerBundle\EmailAttachmentHandler\FilesystemAttachmentHandler;
 use Fusonic\MessengerMailerBundle\Middleware\AttachmentEmailMiddleware;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Component\Mailer\Messenger\SendEmailMessage;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Stamp\ReceivedStamp;
@@ -25,9 +26,7 @@ final class AttachmentEmailTest extends MiddlewareTestCase
 {
     use TestSetupTrait;
 
-    /**
-     * @dataProvider provideEmailInstances
-     */
+    #[DataProvider('provideEmailInstances')]
     public function testSendAndHandleMessage(TemplatedAttachmentEmail|AttachmentEmail $email): void
     {
         $sender = $this->createMock(SenderInterface::class);
