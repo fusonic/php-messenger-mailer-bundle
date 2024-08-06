@@ -24,7 +24,7 @@ use Symfony\Component\Mime\Part\DataPart;
 class AttachmentEmailMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private readonly EmailAttachmentHandlerInterface $handler
+        private readonly EmailAttachmentHandlerInterface $handler,
     ) {
     }
 
