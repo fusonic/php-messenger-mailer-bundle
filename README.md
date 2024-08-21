@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/packagist/l/fusonic/messenger-mailer-bundle?color=blue)](https://github.com/fusonic/php-messenger-mailer-bundle/blob/master/LICENSE)
 [![Latest Version](https://img.shields.io/github/tag/fusonic/php-messenger-mailer-bundle.svg?color=blue)](https://github.com/fusonic/php-messenger-mailer-bundle/releases)
 [![Total Downloads](https://img.shields.io/packagist/dt/fusonic/messenger-mailer-bundle.svg?color=blue)](https://packagist.org/packages/fusonic/messenger-mailer-bundle)
-![php 8.1+](https://img.shields.io/badge/php-min%208.1-blue.svg)
+![php 8.2+](https://img.shields.io/badge/php-min%208.1-blue.svg)
 
 * [About](#about)
 * [Install](#install)
@@ -36,7 +36,7 @@ composer require fusonic/messenger-mailer-bundle
 
 Requirements:
 
-- PHP 8.1+
+- PHP 8.2+
 - Symfony 6.2+
 
 In case Symfony did not add the bundle to the bundle configuration, add the following (by default located in `config/bundles.php`):

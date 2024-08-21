@@ -1,7 +1,7 @@
 {
     "name": "fusonic/messenger-mailer-bundle",
     "license": "MIT",
-    "version": "2.2.3",
+    "version": "2.3.0",
     "description": "Symfony bundle for asynchronous e-mails with attachments through Symfony Messenger.",
     "type": "symfony-bundle",
     "authors": [

@@ -30,7 +30,7 @@ class FilesystemAttachmentHandler implements EmailAttachmentHandlerInterface
 
     public function writeAttachment(AttachmentEmailInterface $email, string $path, string $body): string
     {
-        $path = sprintf(
+        $path = \sprintf(
             '%s/%s/%s',
             $this->attachmentsDirectory,
             $email->getId(),
@@ -56,7 +56,7 @@ class FilesystemAttachmentHandler implements EmailAttachmentHandlerInterface
     public function removeAttachments(AttachmentEmailInterface $email): void
     {
         $this->fs->remove(
-            sprintf('%s/%s', $this->attachmentsDirectory, $email->getId())
+            \sprintf('%s/%s', $this->attachmentsDirectory, $email->getId())
         );
     }
 }
