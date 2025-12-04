@@ -14,7 +14,7 @@ use Fusonic\MessengerMailerBundle\EmailAttachmentHandler\FilesystemAttachmentHan
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mime\Part\DataPart;
 
-class FilesystemAttachmentHandlerTest extends TestCase
+final class FilesystemAttachmentHandlerTest extends TestCase
 {
     public function testWriteAndRemove(): void
     {

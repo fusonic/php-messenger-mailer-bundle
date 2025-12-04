@@ -19,13 +19,12 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class FilesystemAttachmentHandler implements EmailAttachmentHandlerInterface
 {
-    private Filesystem $fs;
-    private string $attachmentsDirectory;
+    private readonly Filesystem $fs;
 
-    public function __construct(string $attachmentsDirectory)
-    {
+    public function __construct(
+        private readonly string $attachmentsDirectory,
+    ) {
         $this->fs = new Filesystem();
-        $this->attachmentsDirectory = $attachmentsDirectory;
     }
 
     public function writeAttachment(AttachmentEmailInterface $email, string $path, string $body): string

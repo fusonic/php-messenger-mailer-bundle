@@ -16,7 +16,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mime\Part\DataPart;
 
-class AttachmentEmailTest extends TestCase
+final class AttachmentEmailTest extends TestCase
 {
     /**
      * @param class-string<AttachmentEmailInterface> $testClass
@@ -60,13 +60,12 @@ class AttachmentEmailTest extends TestCase
     }
 
     /**
-     * @return array<array<class-string<AttachmentEmailInterface>>>
+     * @return \Iterator<array<class-string<AttachmentEmailInterface>>>
      */
-    public static function getTestClasses(): array
+    public static function getTestClasses(): \Iterator
     {
-        return [
-            [AttachmentEmail::class],
-            [TemplatedAttachmentEmail::class],
-        ];
+        yield [AttachmentEmail::class];
+
+        yield [TemplatedAttachmentEmail::class];
     }
 }

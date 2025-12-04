@@ -1,7 +1,7 @@
 {
     "name": "fusonic/messenger-mailer-bundle",
     "license": "MIT",
-    "version": "2.3.0",
+    "version": "2.4.0",
     "description": "Symfony bundle for asynchronous e-mails with attachments through Symfony Messenger.",
     "type": "symfony-bundle",
     "authors": [
@@ -24,36 +24,49 @@
         ]
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.58",
-        "infection/infection": "^0.29",
-        "phpstan/phpstan": "^1.11",
-        "phpstan/phpstan-deprecation-rules": "^1.2",
-        "phpstan/phpstan-phpunit": "^1.4",
-        "phpstan/phpstan-strict-rules": "^1.6",
-        "phpstan/phpstan-symfony": "^1.4",
-        "phpunit/phpunit": "^11.2",
-        "symfony/framework-bundle": "^6.2 || ^7.0",
-        "tomasvotruba/type-coverage": "^0.3"
+        "friendsofphp/php-cs-fixer": "^3.91",
+        "infection/infection": "^0.31",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0",
+        "phpunit/phpunit": "^12.4",
+        "rector/rector": "^2.2",
+        "symfony/framework-bundle": "^6.4 || ^7.3 || ^8.0",
+        "tomasvotruba/type-coverage": "^2.0"
     },
     "require": {
         "php": ">=8.2",
-        "symfony/mime": "^6.2 || ^7.0",
-        "symfony/http-kernel": "^6.2 || ^7.0",
-        "symfony/config": "^6.2 || ^7.0",
-        "symfony/dependency-injection": "^6.2 || ^7.0",
-        "symfony/messenger": "^6.2 || ^7.0",
-        "symfony/filesystem": "^6.2 || ^7.0",
-        "symfony/yaml": "^6.2 || ^7.0",
-        "symfony/mailer": "^6.2 || ^7.0",
-        "symfony/twig-bridge": "^6.2 || ^7.0"
+        "symfony/mime": "^6.4 || ^7.3 || ^8.0",
+        "symfony/http-kernel": "^6.4 || ^7.3 || ^8.0",
+        "symfony/config": "^6.4 || ^7.3 || ^8.0",
+        "symfony/dependency-injection": "^6.4 || ^7.3 || ^8.0",
+        "symfony/messenger": "^6.4 || ^7.3 || ^8.0",
+        "symfony/filesystem": "^6.4 || ^7.3 || ^8.0",
+        "symfony/yaml": "^6.4 || ^7.3 || ^8.0",
+        "symfony/mailer": "^6.4 || ^7.3 || ^8.0",
+        "symfony/twig-bridge": "^6.4 || ^7.3 || ^8.0"
     },
     "scripts": {
-        "phpstan": "XDEBUG_MODE=off php -d memory_limit=2048M vendor/bin/phpstan analyse",
-        "phpcs-check": "XDEBUG_MODE=off vendor/bin/php-cs-fixer check -v --diff",
-        "phpcs-fix": "XDEBUG_MODE=off vendor/bin/php-cs-fixer fix -v",
         "infection": "XDEBUG_MODE=coverage vendor/bin/infection",
+        "phpcs:check": "XDEBUG_MODE=off vendor/bin/php-cs-fixer check -v --diff",
+        "phpcs:fix": "XDEBUG_MODE=off vendor/bin/php-cs-fixer fix -v",
+        "phpstan": "XDEBUG_MODE=off vendor/bin/phpstan analyse --memory-limit=512M",
+        "rector:check": "XDEBUG_MODE=off vendor/bin/rector --dry-run",
+        "rector:fix": "XDEBUG_MODE=off vendor/bin/rector",
         "test": "XDEBUG_MODE=off vendor/bin/phpunit --testdox",
-        "test-coverage" : "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-text --coverage-cobertura=coverage/phpunit/cobertura.xml --coverage-html=coverage/phpunit/html"
+        "test:coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --coverage-cobertura=coverage/phpunit/cobertura.xml --coverage-html=coverage/phpunit/html --coverage-text",
+        "code:check": [
+            "@phpcs:check",
+            "@phpstan",
+            "@rector:check"
+        ],
+        "code:fix": [
+            "@phpcs:fix",
+            "@phpstan",
+            "@rector:fix"
+        ]
     },
     "config": {
         "sort-packages": true,

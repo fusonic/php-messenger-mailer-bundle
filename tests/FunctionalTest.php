@@ -17,7 +17,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Part\DataPart;
 
-class FunctionalTest extends KernelTestCase
+final class FunctionalTest extends KernelTestCase
 {
     use TestSetupTrait;
 
@@ -42,7 +42,7 @@ class FunctionalTest extends KernelTestCase
     {
         (new Filesystem())->remove('var/cache/test');
         self::bootKernel();
-        self::assertTrue(static::$booted);
+        self::assertTrue(self::$booted);
     }
 
     public function testServiceWiring(): void

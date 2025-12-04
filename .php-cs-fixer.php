@@ -16,9 +16,10 @@ $finder = (new PhpCsFixer\Finder())
 return (new PhpCsFixer\Config())
     ->setParallelConfig(ParallelConfigFactory::detect())
     ->setRules([
-        '@PHP82Migration' => true,
+        '@PHP8x2Migration' => true,
         '@Symfony' => true,
         '@Symfony:risky' => true,
+        'date_time_immutable' => true,
         'declare_strict_types' => true,
         'header_comment' => [
             'header' => 'Copyright (c) Fusonic GmbH. All rights reserved.'.\PHP_EOL.'Licensed under the MIT License. '.
@@ -31,6 +32,34 @@ return (new PhpCsFixer\Config())
         'single_line_throw' => false,
         'strict_comparison' => true,
         'strict_param' => true,
+        'phpdoc_line_span' => true,
+        'blank_line_before_statement' => [
+            'statements' => [
+                'break',
+                'case',
+                'continue',
+                'declare',
+                'default',
+                'do',
+                'exit',
+                'for',
+                'foreach',
+                'goto',
+                'if',
+                'include',
+                'include_once',
+                'phpdoc',
+                'require',
+                'require_once',
+                'return',
+                'switch',
+                'throw',
+                'try',
+                'while',
+                'yield',
+                'yield_from',
+            ],
+        ],
     ])
     ->setFinder($finder)
     ->setRiskyAllowed(true);

@@ -14,7 +14,7 @@ use Fusonic\MessengerMailerBundle\EmailAttachmentHandler\NullAttachmentHandler;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mime\Part\DataPart;
 
-class NullAttachmentHandlerTest extends TestCase
+final class NullAttachmentHandlerTest extends TestCase
 {
     public function testWriteAndRemove(): void
     {

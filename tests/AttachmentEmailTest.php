@@ -64,13 +64,12 @@ final class AttachmentEmailTest extends MiddlewareTestCase
     }
 
     /**
-     * @return array<array<TemplatedAttachmentEmail|AttachmentEmail>>
+     * @return \Iterator<array<AttachmentEmail|TemplatedAttachmentEmail>>
      */
-    public static function provideEmailInstances(): array
+    public static function provideEmailInstances(): \Iterator
     {
-        return [
-            [new AttachmentEmail()],
-            [new TemplatedAttachmentEmail()],
-        ];
+        yield [new AttachmentEmail()];
+
+        yield [new TemplatedAttachmentEmail()];
     }
 }
