@@ -9,7 +9,7 @@ declare(strict_types=1);
 
 use Symfony\Component\ErrorHandler\ErrorHandler;
 
-require dirname(__DIR__).'/vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 // Fix for https://github.com/symfony/symfony/issues/53812
 // Recommended by https://github.com/symfony/symfony/issues/53812#issuecomment-1962740145

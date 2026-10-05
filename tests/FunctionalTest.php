@@ -23,14 +23,14 @@ final class FunctionalTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        (new Filesystem())->remove($this->getAttachmentDirectory());
+        new Filesystem()->remove($this->getAttachmentDirectory());
         self::bootKernel();
     }
 
     protected function tearDown(): void
     {
         parent::tearDown();
-        (new Filesystem())->remove($this->getAttachmentDirectory());
+        new Filesystem()->remove($this->getAttachmentDirectory());
     }
 
     protected static function getKernelClass(): string
@@ -40,7 +40,7 @@ final class FunctionalTest extends KernelTestCase
 
     public function testBootKernel(): void
     {
-        (new Filesystem())->remove('var/cache/test');
+        new Filesystem()->remove('var/cache/test');
         self::bootKernel();
         self::assertTrue(self::$booted);
     }
@@ -58,7 +58,7 @@ final class FunctionalTest extends KernelTestCase
         /** @var MailerInterface $mailer */
         $mailer = self::getContainer()->get('test.mailer');
 
-        $email = (new AttachmentEmail())
+        $email = new AttachmentEmail()
             ->subject('test')
             ->from('test@example.com')
             ->to('test@example.com')

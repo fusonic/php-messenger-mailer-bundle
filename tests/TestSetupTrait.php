@@ -15,7 +15,7 @@ trait TestSetupTrait
 {
     protected function setUp(): void
     {
-        (new Filesystem())->remove($this->getAttachmentDirectory());
+        new Filesystem()->remove($this->getAttachmentDirectory());
     }
 
     protected function getAttachmentDirectory(): string
@@ -25,6 +25,6 @@ trait TestSetupTrait
 
     protected function tearDown(): void
     {
-        (new Filesystem())->remove($this->getAttachmentDirectory());
+        new Filesystem()->remove($this->getAttachmentDirectory());
     }
 }

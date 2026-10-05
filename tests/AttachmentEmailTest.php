@@ -29,7 +29,7 @@ final class AttachmentEmailTest extends MiddlewareTestCase
     #[DataProvider('provideEmailInstances')]
     public function testSendAndHandleMessage(TemplatedAttachmentEmail|AttachmentEmail $email): void
     {
-        $sender = $this->createMock(SenderInterface::class);
+        $sender = self::createStub(SenderInterface::class);
         $attachmentDirectory = $this->getAttachmentDirectory();
 
         $email->addPersistedPart(new DataPart('inline file content', 'inline-file.txt'));
